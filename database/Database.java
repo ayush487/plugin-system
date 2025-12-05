@@ -2,6 +2,7 @@ package database;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -87,10 +88,11 @@ public class Database {
 
   private void execute(String choice, Scanner sc) {
     if (choice.equals("1")) insertData(sc);
+    else if (choice.equals("2")) requestExport(sc);
     else if (choice.equals("0")) return;
     else if (choice.equals("9")) addFormatter(sc);
     else {
-      int idx = Integer.parseInt(choice)-2;
+      int idx = Integer.parseInt(choice)-3;
       if (idx>=formatters.size()) {
         System.out.println("Invalid choice");
         return;
@@ -111,6 +113,28 @@ public class Database {
     this.writeData(map);
   }
 
+  private void requestExport(Scanner sc) {
+    System.out.println("Select exporting format :");
+    for (int i=1;i<formatters.size();i++) {
+      System.out.println(String.format("%d. %s", i, formatters.get(i).getName()));
+    }
+    System.out.println("0. Cancel");
+    String choice = sc.nextLine();
+    try {
+      int idx = Integer.parseInt(choice);
+      if (idx == 0) return;
+      else if (idx<0 || idx>=formatters.size()) throw new Exception();
+      else {
+        String data = formatters.get(idx).formatData(dataList);
+        if (createFile(data, "export_data." + formatters.get(idx).getExtension())) System.out.println("File created successfully");
+        else System.out.println("Error creating file");
+      }
+    } catch (Exception e) {
+      System.out.println("Please select a valid option.");
+      return;
+    }
+  }
+
   public void addFormatter(Formatter formatter) {
     this.formatters.add(formatter);
   }
@@ -118,8 +142,9 @@ public class Database {
   private void displayOptions() {
     System.out.println("Select an option :");
     System.out.println("1. Insert Data");
+    System.out.println("2. Export Data");
     for (int i = 0; i < formatters.size(); i++) {
-      System.out.println(String.format("%d. Fetch Data (%s)", i + 2, formatters.get(i).getName()));
+      System.out.println(String.format("%d. Fetch Data (%s)", i + 3, formatters.get(i).getName()));
     }
     System.out.println("9. Add Formatter");
     System.out.println("0. Exit");
@@ -141,6 +166,19 @@ public class Database {
     String line = String.join(",", al);
     pw.println(line);
     pw.flush();
+  }
+
+  private boolean createFile(String content, String filename) {
+    File file = new File(filename);
+    try {
+      FileOutputStream fos = new FileOutputStream(file);
+      for (char c : content.toCharArray()) {
+        fos.write(c);
+      }
+      fos.flush();
+      fos.close();
+      return true;
+    } catch (IOException e) { return false; }
   }
 
   private void addFormatter(Scanner sc) {

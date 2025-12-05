@@ -25,5 +25,6 @@ public class DefaultFormatter implements Formatter {
     return builder.toString();
   }
 
-
+  @Override
+  public String getExtension() { return "txt";}
 }

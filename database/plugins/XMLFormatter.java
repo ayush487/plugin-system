@@ -23,8 +23,9 @@ public class XMLFormatter implements Formatter {
   }
 
   @Override
-  public String getName() {
-    return "XML Formatter";
-  }
+  public String getName() { return "XML Formatter"; }
+
+  @Override
+  public String getExtension() { return "xml";}
 
 }

@@ -33,5 +33,8 @@ public class CSVFormatter implements Formatter {
     }
     return builder.toString();
   }
+
+  @Override
+  public String getExtension() { return "csv";}
   
 }

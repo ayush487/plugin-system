@@ -7,33 +7,31 @@ import java.util.Set;
 import database.Formatter;
 
 public class JSONFormatter implements Formatter {
-  public String formatData(Map<String, String> dataMap) {
-    Set<String> keys = dataMap.keySet();
-    StringBuilder jsonBuilder = new StringBuilder("{\n");
-    for (String key : keys) {
-      jsonBuilder.append(String.format("\"%s\" : \"%s\",\n", key, dataMap.get(key)));
-    }
-    return jsonBuilder.toString();
-  }
-
+  
   @Override
   public String formatData(List<Map<String, String>> dataList) {
     StringBuilder jsonBuilder = new StringBuilder("[\n");
+    int c1 = 0;
     for (Map<String, String> dataMap : dataList) {
+      c1++;
       Set<String> keys = dataMap.keySet();
       jsonBuilder.append("  {\n");
+      int c2 = 0;
       for (String key : keys) {
-        jsonBuilder.append(String.format("    \"%s\" : \"%s\",\n", key, dataMap.get(key)));
+        c2++;
+        jsonBuilder.append(String.format("    \"%s\" : \"%s\"", key, dataMap.get(key)));
+        jsonBuilder.append(c2 == keys.size() ? "\n" : ",\n");
       }
-      jsonBuilder.append("  },\n");
+      jsonBuilder.append(c1 == dataList.size() ? "  }\n" : "  },\n");
     }
 
-    jsonBuilder.append("\n]");
+    jsonBuilder.append("]");
     return jsonBuilder.toString();
   }
 
   @Override
-  public String getName() {
-    return "JSON Formatter";
-  }
+  public String getName() { return "JSON Formatter"; }
+
+  @Override
+  public String getExtension() { return "json";}
 }
