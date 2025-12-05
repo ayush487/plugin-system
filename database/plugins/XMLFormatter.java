@@ -1,10 +1,6 @@
 package database.plugins;
-
-import java.util.List;
-import java.util.Map;
-
+import java.util.*;
 import database.Formatter;
-
 public class XMLFormatter implements Formatter {
   @Override
   public String formatData(List<Map<String, String>> dataList) {
@@ -18,14 +14,10 @@ public class XMLFormatter implements Formatter {
       }
       xmlBuilder.append(" </row>\n");
     }
-    xmlBuilder.append("</root>");
-    return xmlBuilder.toString();
+    return xmlBuilder.append("</root>").toString();
   }
-
   @Override
   public String getName() { return "XML Formatter"; }
-
   @Override
   public String getExtension() { return "xml";}
-
 }

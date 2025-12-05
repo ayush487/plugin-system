@@ -1,24 +1,10 @@
 package database;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
+import java.util.*;
 public class CSVFormatter implements Formatter {
-
-  private String name = "CSV Formatter";
-
-  @Override
-  public String getName() {
-    return this.name;
-  }
-
   @Override
   public String formatData(List<Map<String, String>> dataList) {
     StringBuilder builder = new StringBuilder();
-    if (dataList.isEmpty()) {
-      return builder.toString();
-    }
+    if (dataList.isEmpty()) return builder.toString();
     Map<String, String> firstRow = dataList.get(0);
     Set<String> keys = firstRow.keySet();
     List<String> keyList = new ArrayList<>(keys);
@@ -33,8 +19,8 @@ public class CSVFormatter implements Formatter {
     }
     return builder.toString();
   }
-
+  @Override
+  public String getName() { return "CSV Formatter"; }
   @Override
   public String getExtension() { return "csv";}
-  
 }

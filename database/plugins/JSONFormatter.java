@@ -1,13 +1,8 @@
 package database.plugins;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
+import java.util.*;
 import database.Formatter;
 
 public class JSONFormatter implements Formatter {
-  
   @Override
   public String formatData(List<Map<String, String>> dataList) {
     StringBuilder jsonBuilder = new StringBuilder("[\n");
@@ -24,14 +19,10 @@ public class JSONFormatter implements Formatter {
       }
       jsonBuilder.append(c1 == dataList.size() ? "  }\n" : "  },\n");
     }
-
-    jsonBuilder.append("]");
-    return jsonBuilder.toString();
+    return jsonBuilder.append("]").toString();
   }
-
   @Override
   public String getName() { return "JSON Formatter"; }
-
   @Override
   public String getExtension() { return "json";}
 }

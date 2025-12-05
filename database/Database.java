@@ -1,16 +1,7 @@
 package database;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
 public class Database {
 
@@ -73,16 +64,13 @@ public class Database {
         System.out.println("Deleted : " + isDeleted);
         db.takeMetaDataInput(sc);
       }
-    } else
-      db.takeMetaDataInput(sc);
-
+    } else db.takeMetaDataInput(sc);
     String choice;
     do {
       db.displayOptions();
       choice = sc.nextLine();
       db.execute(choice, sc);
     } while (!choice.equals("0"));
-
     sc.close();
   }
 
@@ -135,9 +123,7 @@ public class Database {
     }
   }
 
-  public void addFormatter(Formatter formatter) {
-    this.formatters.add(formatter);
-  }
+  public void addFormatter(Formatter formatter) { this.formatters.add(formatter); }
 
   private void displayOptions() {
     System.out.println("Select an option :");
@@ -205,9 +191,7 @@ public class Database {
     System.out.println("Enters column names separated by comma(,) : ");
     String colNames = sc.nextLine();
     String[] colArray = colNames.split(",");
-    for (String key : colArray) {
-      keys.add(key);
-    }
+    for (String key : colArray) keys.add(key);
     pw.println(colNames);
     pw.flush();
   }
