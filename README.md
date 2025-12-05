@@ -8,4 +8,6 @@
 
 > I have provided two formatters as core features : Default Formatter and CSV Formatter and Users can add other formatters through plugins in the runtime.
 
-> I also provided plugins for JSONFormatters.
+> I also provided plugins for JSONFormatters and XMLFormatter.
+
+> **Added** : Now Data can be exported to all available formats.
